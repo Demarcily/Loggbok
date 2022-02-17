@@ -30,7 +30,7 @@ public class LogEntry implements Serializable{
 
   @Override
   public String toString() {
-    return "LogEntry{" + "createdAt=" + createdAt
-            + ", updatedAt=" + updatedAt + ", message='" + message + '\'' + '}';
+    return "LogEntry {" + "createdAt = " + createdAt
+            + ", updatedAt = " + updatedAt + ", message = '" + message + "', author = '" + author + "'}";
   }
 }

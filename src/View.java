@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public class View {
   private String message = "Hello";
   private String author = "Liam";
