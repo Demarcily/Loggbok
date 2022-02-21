@@ -8,7 +8,7 @@ public class Controller {
   private JFrame frame;
   private JPanel panel;
   private JButton button;
-  private JTextArea Text;
+  private JTextArea text;
 
 
 
@@ -19,7 +19,9 @@ public class Controller {
   public Controller() {
     frame = new JFrame("Log Entry");
     panel = new JPanel();
+    text = new JTextArea(30, 70);
     frame.add(panel);
+    panel.add(text);
 
     // Create first button
     button = new JButton("Save");
@@ -40,6 +42,8 @@ public class Controller {
       }
     });
     panel.add(button);
+
+
 
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setResizable(true);
