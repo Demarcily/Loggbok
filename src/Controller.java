@@ -4,7 +4,8 @@ import java.awt.event.ActionListener;
 import java.io.*;
 
 public class Controller {
-  private static View v = new View();
+  private View view = new View();
+  private Model model = new Model();
   private JFrame frame;
   private JPanel panel;
   private JButton button;
@@ -23,27 +24,35 @@ public class Controller {
     frame.add(panel);
     panel.add(text);
 
-    // Create first button
+    //Create Add button
+    button = new JButton("Add");
+    button.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        model.add(view.getMessage(), view.getAuthor());
+      }
+    });
+    panel.add(button);
+
+    //Create Save button
     button = new JButton("Save");
     button.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        save();
+        model.save(view.getMessage(), view.getAuthor());
       }
     });
     panel.add(button);
 
-    // Create second button
+    //Create Load button
     button = new JButton("Load");
     button.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        load();
+        model.load();
       }
     });
     panel.add(button);
-
-
 
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setResizable(true);
@@ -52,30 +61,4 @@ public class Controller {
     frame.setVisible(true);
     frame.requestFocus();
   }
-
-  private static void save() {
-    try {
-      LogEntry l = new LogEntry(v.getMessage(), v.getAuthor());
-      ObjectOutputStream outs = new ObjectOutputStream(new FileOutputStream(new File("Logbook")));
-      outs.writeObject(l);
-      outs.flush();
-      outs.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-  private static void load() {
-    try {
-      ObjectInputStream ins = new ObjectInputStream(new FileInputStream(new File("Logbook")));
-      LogEntry l = (LogEntry) ins.readObject();
-      ins.close();
-      System.out.println(l);
-    } catch (IOException | ClassNotFoundException e) {
-      e.printStackTrace();
-    }
-  }
-
-
-
 }
