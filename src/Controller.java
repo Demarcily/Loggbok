@@ -9,7 +9,9 @@ public class Controller {
   private JFrame frame;
   private JPanel panel;
   private JButton button;
-  private JTextArea text;
+  private JTextArea outputText;
+  private JTextArea authorText;
+  private JTextArea messageText;
 
 
 
@@ -20,16 +22,30 @@ public class Controller {
   public Controller() {
     frame = new JFrame("Log Entry");
     panel = new JPanel();
-    text = new JTextArea(30, 70);
+    outputText = new JTextArea(20, 40);
+    authorText = new JTextArea(2, 20);
+    messageText = new JTextArea(2, 20);
     frame.add(panel);
-    panel.add(text);
+    panel.add(outputText);
+    panel.add(messageText);
+    panel.add(authorText);
+
+    messageText.setText("Message");
+    authorText.setText("Author");
 
     //Create Add button
     button = new JButton("Add");
     button.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        model.add(view.getMessage(), view.getAuthor());
+        view.setMessage(messageText.getText());
+        view.setAuthor(authorText.getText());
+        if (messageText.getText().isEmpty() || authorText.getText().isEmpty()) {
+          outputText.setText("Text Missing");
+
+        } else {
+          model.add(view.getMessage(), view.getAuthor());
+        }
       }
     });
     panel.add(button);
@@ -49,7 +65,7 @@ public class Controller {
     button.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        model.load();
+        model.load(outputText);
       }
     });
     panel.add(button);

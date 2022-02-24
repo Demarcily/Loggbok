@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.*;
 
 public class Model implements Serializable{
@@ -8,7 +9,7 @@ public class Model implements Serializable{
   }
 
   public void add(String message, String author) {
-    Object LogEntry = message + " " + author;
+    Object LogEntry = "Message: " + message + " | Author: " + author + " | Created At: " + " | Updated At: " ;
     try {
       ObjectOutputStream outs = new ObjectOutputStream(new FileOutputStream(new File("Logbook")));
       outs.writeObject(LogEntry);
@@ -31,12 +32,12 @@ public class Model implements Serializable{
    */
   }
 
-  public void load() {
+  public void load(JTextArea input) {
     try {
       ObjectInputStream ins = new ObjectInputStream(new FileInputStream(new File("Logbook")));
       Object Log = ins.readObject();
       ins.close();
-      System.out.println(Log);
+      input.setText((String) Log);
     } catch (IOException | ClassNotFoundException e) {
       e.printStackTrace();
     }
