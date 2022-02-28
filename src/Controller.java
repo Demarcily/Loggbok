@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -22,12 +23,21 @@ public class Controller {
   public Controller() {
     frame = new JFrame("Log Entry");
     panel = new JPanel();
-    outputText = new JTextArea(20, 40);
-    authorText = new JTextArea(2, 20);
-    messageText = new JTextArea(2, 20);
+    frame.setPreferredSize(new Dimension(800,700));
     frame.add(panel);
+    //OutputWindow
+    outputText = new JTextArea(30, 70);
+    outputText.setPreferredSize(new Dimension(30,70));
+    outputText.setLineWrap(true);
+    outputText.setEditable(false);
     panel.add(outputText);
+    //MessageInput
+    messageText = new JTextArea(2, 20);
+    messageText.setLineWrap(true);
     panel.add(messageText);
+    //AuthorInput
+    authorText = new JTextArea(2, 20);
+    authorText.setLineWrap(true);
     panel.add(authorText);
 
     messageText.setText("Message");
@@ -42,20 +52,9 @@ public class Controller {
         view.setAuthor(authorText.getText());
         if (messageText.getText().isEmpty() || authorText.getText().isEmpty()) {
           outputText.setText("Text Missing");
-
         } else {
-          model.add(view.getMessage(), view.getAuthor());
+          model.add(view.getMessage(), view.getAuthor(), view.getCreatedAt(), view.getUpdatedAt());
         }
-      }
-    });
-    panel.add(button);
-
-    //Create Save button
-    button = new JButton("Save");
-    button.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-        model.save(view.getMessage(), view.getAuthor());
       }
     });
     panel.add(button);
